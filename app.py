@@ -4,6 +4,7 @@ from radware_client import RadwareClient
 from modules.application_adoption import render_application_adoption_dashboard
 from modules.security_recommendations import render_security_recommendations_dashboard
 from modules.entitlement_profiles import render_entitlement_selector
+from ui_feedback import radware_working, radware_success
 
 st.set_page_config(
     page_title="Radware Account Health Analyzer",
@@ -40,7 +41,8 @@ if connect:
 
         try:
             if context_type == "Application Protection":
-                result = client.get("/v1/gms/applications")
+                with radware_working("Radware is analyzing the account..."):
+                    result = client.get("/v1/gms/applications")
 
                 st.session_state["client"] = client
                 st.session_state["context"] = context

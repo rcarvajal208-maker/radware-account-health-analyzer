@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 from modules.entitlement_profiles import filter_columns_by_entitlement
+from ui_feedback import radware_inline_loader
 
 PRIORITY_COLUMNS = [
     "Application Name",
@@ -236,6 +237,13 @@ def normalize_application_adoption(client, applications):
 
     progress = st.progress(0, text="Loading application security adoption...")
 
+    loader_placeholder = st.empty()
+
+    with loader_placeholder.container():
+        radware_inline_loader("Loading application security adoption...")
+
+    progress = st.progress(0)
+
     for index, app_summary in enumerate(applications):
         app_id = app_summary.get("id")
 
@@ -440,7 +448,7 @@ def normalize_application_adoption(client, applications):
             text="Loading application security adoption..."
         )
 
-    progress.empty()
+    loader_placeholder.empty()
 
     df = pd.DataFrame(rows)
 
