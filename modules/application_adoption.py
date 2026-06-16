@@ -502,6 +502,7 @@ def render_application_adoption_dashboard(applications_response, client):
 
     applications = applications_response.get("content", [])
 
+
     if "application_adoption_df" not in st.session_state:
         adoption_df = normalize_application_adoption(client, applications)
         st.session_state["application_adoption_df"] = adoption_df
